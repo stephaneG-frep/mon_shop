@@ -22,6 +22,7 @@ class RegisterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+           
             $entityManager->persist($user);
             $entityManager->flush();
         }

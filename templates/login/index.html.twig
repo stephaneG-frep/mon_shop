@@ -5,7 +5,7 @@
 
     <div class="container my-5">
 
-        <h1>Connexion...</h1>
+        <h1 style="color: #028391">Connexion...</h1>
 
            {% if error %}
                 <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -25,7 +25,7 @@
            </form>
            </br>
 
-           <h3>Pas encore de compte...</h3><a href="{{ path('app_register') }}">M'inscrire..</a>
+           <h3 style="color: #028391" >Pas encore de compte...</h3><a href="{{ path('app_register') }}" style="color: #028391">M'inscrire..</a>
     </div>
 
 {% endblock %}

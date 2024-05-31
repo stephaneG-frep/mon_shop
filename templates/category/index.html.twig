@@ -9,9 +9,11 @@
     <div class="row">
         {% for product in category.products %}            
             <div class="col-md-3 text-center">
-                <h4 style="color: #627254">{{ product.name }}</h4>
-                <img src="/uploads/{{ product.illustration }}" class="img-fluid">
-                <span class="d-block">{{ product.pricewt }}</span>
+                <a href="{{ path('app_product', { slug : product.slug } ) }}" class="text-decoration-none">
+                    <h4 style="color: #627254">{{ product.name }}</h4>
+                    <img src="/uploads/{{ product.illustration }}" class="img-fluid">
+                </a>
+                <span style="background: #9CAFAA" class="d-block mt-3" >Ce produit est au prix de: {{ product.pricewt }}</span>
                
                 
             </div>          

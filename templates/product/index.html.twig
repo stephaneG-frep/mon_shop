@@ -12,7 +12,7 @@
             <small style="color: #9F70FD"><i><a href="{{ path('app_category', { slug : product.category.slug }) }}">..{{ product.category.name }}</a>..>{{ product.name }}</i></small>
             <h1>{{ product.name }}</h1>
             {{ product.description|raw }}
-            <span style="background: #9CAFAA" class="d-block mt-3 text-center" >Ce produit est au prix de: {{ product.pricewt }}</span>
+            <span style="background: #9CAFAA" class="d-block mt-3 text-center" >Ce produit est au prix de: {{ product.pricewt|price }}</span>
             <button class="btn mt-4 w-100" style="background: #A10035; color: #FBA834">Ajouter au panier</button>
         </div>
     

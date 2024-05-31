@@ -13,7 +13,7 @@
                     <h4 style="color: #627254">{{ product.name }}</h4>
                     <img src="/uploads/{{ product.illustration }}" class="img-fluid">
                 </a>
-                <span style="background: #9CAFAA" class="d-block mt-3" >Ce produit est au prix de: {{ product.pricewt }}</span>
+                <span style="background: #9CAFAA" class="d-block mt-3" >Ce produit est au prix de: {{ product.pricewt|price }}</span>
                
                 
             </div>          

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="container my-5"> 
+    <h1 style="color: #028391">{{ category.name }}</h1>
+
+    <p>Cette categorie contient {{ category.products|length }} produit(s).</p>
+   
+    <div class="row">
+        {% for product in category.products %}            
+            <div class="col-md-3 text-center">
+                <h4 style="color: #627254">{{ product.name }}</h4>
+                <img src="/uploads/{{ product.illustration }}" class="img-fluid">
+                <span class="d-block">{{ product.pricewt }}</span>
+               
+                
+            </div>          
+        {% endfor %}  
+    </div>
+    
+
+   
+  
+</div>
+
+{% endblock %}
+

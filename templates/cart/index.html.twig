@@ -7,7 +7,32 @@
     <div class="row mt-4">
 
        <div class="col-md-8">
-           <h3 style="color: #028391">Liste de mes produits!</h3>
+        
+                {% for product in cart %}   
+
+            <div class="row mt-2">
+      
+                    <div class="col-md-2">
+                        <img src="/uploads/{{ product.objet.illustration }}" class="img-fluid" alt="{{ product.objet.name }}"  />
+                    </div>
+                    <div class="col-md-6">
+                         <strong style="color: #028391">{{ product.objet.name }}</strong>
+                         <span style="background: #9CAFAA" class="d-block mt-3 text-center small" >Ce produit est au prix de: {{ product.objet.pricewt|price }}</span>
+                    </div>
+                    <div class="col-md-2 text-right">
+                       <span class="badge bg-secondary">
+                           <span style="color: #7ABA78; font: small-caps bold 18px/1 sans-serif;"> X {{ product.qty}} </span>
+                       </span>
+                    </div>
+                    <div class="col-md-2">
+                        <span style="color: #EE4E4E; font: small-caps bold 18px/1 sans-serif;"> {{ (product.qty * product.objet.pricewt)|price }} </span>
+                    </div>
+            </div>
+
+                {% endfor %}
+
+           
+             
        </div>
 
        

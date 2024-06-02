@@ -12,17 +12,18 @@
 
             <div class="row mt-2">
       
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <img src="/uploads/{{ product.objet.illustration }}" class="img-fluid" alt="{{ product.objet.name }}"  />
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                          <strong style="color: #028391">{{ product.objet.name }}</strong>
                          <span style="background: #9CAFAA" class="d-block mt-3 text-center small" >Ce produit est au prix de: {{ product.objet.pricewt|price }}</span>
                     </div>
-                    <div class="col-md-2 text-right">
-                       <span class="badge bg-secondary">
-                           <span style="color: #7ABA78; font: small-caps bold 18px/1 sans-serif;"> X {{ product.qty}} </span>
-                       </span>
+                    <div class="col-md-3 text-right">
+                         <a style="color: #57C5B6; text-decoration: none" href="{{ path('app_cart_decrease', { id: product.objet.id } ) }}"> ➖ </a>
+                         <span class="badge bg-secondary">
+                           <span style="color: #7ABA78; font: small-caps bold 18px/1 sans-serif;"> X {{ product.qty}} </span> 
+                        </span><a style="color: #FF204E; text-decoration: none" href="{{ path('app_cart_add', { id: product.objet.id } ) }}"> ➕ </a>
                     </div>
                     <div class="col-md-2">
                         <span style="color: #EE4E4E; font: small-caps bold 18px/1 sans-serif;"> {{ (product.qty * product.objet.pricewt)|price }} </span>
@@ -31,13 +32,27 @@
 
                 {% endfor %}
 
-           
-             
+           <a href="{{ path('app_cart_remove') }}" class="mt-6 text-decoration-none" style="color: #EE4E4E; font: small-caps bold 20px/1">Vider le panier..     🚮</a>         
        </div>
 
        
        <div class="col-md-4">
-           <h3 style="color: #028391">Récap de mon panier!</h3>
+          
+           <div class="bg-light p-3">
+               <div class="d-flex justify-content-between">
+                   <span class="fw-bold" style="color: #028391">Total de vos produits: </span>
+                   <span>{{ fullCartQuantity }}</span>
+               </div>
+           </div>
+
+            <div class="bg-light p-3">
+               <div class="d-flex justify-content-between mt-3">
+                   <span class="fw-bold" style="color: #028391">Prix total T.T.C: </span>
+                   <span>{{ totalWt|price }}</span>
+               </div>
+           </div>
+          
+           <a href="" class="btn mt-4 w-100" style="background: #A10035; color: #FBA834">Passer la commande</a>
        </div>
 
     </div>

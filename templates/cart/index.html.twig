@@ -6,7 +6,7 @@
 
     <h1 style="color: #028391">Mon panier...</h1>
 
-       <div class="col-md-8">
+       <div class="col-md-6 my-5">
         
                 {% for product in cart %}   
 
@@ -32,11 +32,14 @@
 
                 {% endfor %}
 
-           <a href="{{ path('app_cart_remove') }}" class="mt-6 text-decoration-none" style="color: #EE4E4E; font: small-caps bold 20px/1">Vider le panier..     🚮</a>         
+           <a href="{{ path('app_cart_remove') }}" class="mt-6 text-decoration-none"
+            style="color: #EE4E4E; font: small-caps bold 18px/1">
+            Vider le panier..   🚮
+           </a>         
        </div>
 
        
-       <div class="col-md-4">
+       <div class="col-md-6">
           
            <div class="bg-light p-3">
                <div class="d-flex justify-content-between">

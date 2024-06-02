@@ -8,13 +8,41 @@
        
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             {% include 'account/_menu.html.twig' %}
         </div>
-        <div class="col-md-8">
-            <h3 style="color: #028391"> Mes adresses... </h3>
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between">
+                <h3 style="color: #028391"> Mes adresses... </h3>
+                      <a href="{{ path('app_account_adress_form') }}" class="btn"
+                       style="background: #A10035; color: #FBA834">Ajouter une adresse
+                       </a>
+            </div>
+
+            {% if app.user.adresses|length == 0 %}
+                <h3>Vous n'avez pas encore ajoutez une adresse</h3>
+            {% else %}
              
-             liste de mes adresses
+            <div class="row">
+                {% for adress in app.user.adresses %}
+                   <div class="col-md-4 mt-2">
+                       
+                       <div class="bg-light p-2 text-center">
+                           <strong>{{ adress.firstname }}_{{ adress.lastname }}</strong></br>
+                           {{ adress.adress }},</br>
+                           {{ adress.postal }}, {{ adress.city }},</br>
+                           {{ adress.country }},</br>
+                           {{ adress.phone }},</br>
+                           <a href="{{ path('app_account_adress_form', { id : adress.id }) }}" class="small text-success">Editer</a>
+                           <a href="{{ path('app_account_adress_delete', { id : adress.id }) }}" class="small text-danger">Supprimez</a>
+                       </div>
+
+                   </div>
+                {% endfor %}
+   
+            </div>
+
+            {% endif %} 
         </div>
     </div>
         

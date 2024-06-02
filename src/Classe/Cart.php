@@ -5,13 +5,16 @@ namespace App\Classe;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 Class Cart 
-{
+{    
     public function __construct(private RequestStack $requestStack)
     {
         
     }
 
-
+/*
+*add()
+*fonction permettant l'ajout d'un produit au panier
+*/
     public function add($product)
     {
        
@@ -32,7 +35,10 @@ Class Cart
         $this->requestStack->getSession()->set('cart', $cart);       
     }
 
-
+/*
+*decrease()
+*fonction permettant la suppression d'une quantitée d'un produit du panier (-)
+*/
     public function decrease($id)
     {
         $cart = $this->requestStack->getSession()->get('cart');
@@ -45,6 +51,10 @@ Class Cart
         $this->requestStack->getSession()->set('cart', $cart);
     }
 
+/*
+*fullQuantity()
+*fonction retournant le total de produits du panier
+*/
     public function fullQuantity()
     {
         $cart = $this->requestStack->getSession()->get('cart');
@@ -61,6 +71,10 @@ Class Cart
         return $quantity;
     }
 
+/*
+*getTotalWt()
+*fonction retournant le prix total du panier
+*/
     public function getTotalWt()
     {
         $cart = $this->requestStack->getSession()->get('cart');
@@ -77,13 +91,19 @@ Class Cart
         return $price;
     }
 
-
+/*
+*remove()
+*fonction permettant la suppression total du panier
+*/
     public function remove()
     {
         return $this->requestStack->getSession()->remove('cart');
     }
     
-
+/*
+*getCart()
+*fonction retournant le panier 
+*/
     public function getCart()
     {
           return $this->requestStack->getSession()->get('cart');

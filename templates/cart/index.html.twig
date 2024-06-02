@@ -1,25 +1,25 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-<div class="container my-5"> 
-    <h1 style="color: #028391">Mon panier...</h1>
 
-    <div class="row mt-4">
+<div class="container my-5"> 
+
+    <h1 style="color: #028391">Mon panier...</h1>
 
        <div class="col-md-8">
         
                 {% for product in cart %}   
 
-            <div class="row mt-2">
+            <div class="row mt-4">
       
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <img src="/uploads/{{ product.objet.illustration }}" class="img-fluid" alt="{{ product.objet.name }}"  />
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                          <strong style="color: #028391">{{ product.objet.name }}</strong>
                          <span style="background: #9CAFAA" class="d-block mt-3 text-center small" >Ce produit est au prix de: {{ product.objet.pricewt|price }}</span>
                     </div>
-                    <div class="col-md-3 text-right">
+                    <div class="col-md-2 text-right">
                          <a style="color: #57C5B6; text-decoration: none" href="{{ path('app_cart_decrease', { id: product.objet.id } ) }}"> ➖ </a>
                          <span class="badge bg-secondary">
                            <span style="color: #7ABA78; font: small-caps bold 18px/1 sans-serif;"> X {{ product.qty}} </span> 

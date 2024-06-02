@@ -26,6 +26,10 @@ class AppExtensions extends AbstractExtension implements GlobalsInterface
         ];
     }
 
+    /*
+*formatPrice()
+*fonction pour formater l'affichage des prix
+*/
     public function formatPrice($number)
     {
         return number_format($number, '2', ','). '€';

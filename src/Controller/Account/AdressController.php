@@ -2,6 +2,7 @@
 
 namespace App\Controller\Account;
 
+use App\Classe\Cart;
 use App\Entity\Adress;
 use App\Form\AdressUserType;
 use App\Repository\AdressRepository;
@@ -48,7 +49,7 @@ class AdressController extends AbstractController
 
 
     #[Route('/compte/adresse/ajouter/{id}', name: 'app_account_adress_form', defaults: ['id' => null])]
-    public function form(Request $request, $id,  AdressRepository $adressRepository): Response
+    public function form(Request $request, $id,  AdressRepository $adressRepository, Cart $cart): Response
     {  
         if ($id) {
             $adress = $adressRepository->findOneById($id);
@@ -73,7 +74,12 @@ class AdressController extends AbstractController
                 'success',
                 'Votre adresse a bien été sauvegardée...'
               );
-              return $this->redirectToRoute('app_account_adresses');
+
+            if ($cart->fullQuantity() > 0) {
+                return $this->redirectToRoute('app_order');
+            }
+
+            return $this->redirectToRoute('app_account_adresses');
         }
 
         return $this->render('account/adress/form.html.twig', [

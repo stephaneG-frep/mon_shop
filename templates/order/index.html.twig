@@ -2,14 +2,23 @@
 {% block body %}
 
 
-<div class="container my-5"> 
+<div class="container my-5 small-container"> 
 
      <h1 style="color: #028391">Ma commande...</h1>
 
-    Choix de mon adresse de livraison</br>
-       {{ form(deliveryForm) }}
-
-    choi du transporteur
+      {{ form_start(deliveryForm)}}
+         <h5>{{ form_row(deliveryForm.adresses) }}</h5>
+         <a href="{{ path('app_account_adress_form') }}"
+          class="small text-decoration-none"
+          style="color: #D3D04F; background: #84A7A1; padding: 10px 20px">
+          Ajouter une nouvelle adresse
+          </a>
+         <hr>
+         <h5>{{ form_row(deliveryForm.carriers)}}</h5>
+      {{ form_end(deliveryForm) }}
+      
+        
+      
 </div>
 
 {% endblock %}

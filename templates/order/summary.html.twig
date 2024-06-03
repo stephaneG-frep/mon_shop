@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+<div class="container my-5"> 
+    <h1 style="color: #028391">Récapitulatif de commande...</h1>
+    <div class="row mt-2">
+       <div class="col-md-8">
+           Contenu de mon panier</br>
+        <h5 style="color: #028391"> Votre adresse de livraison </h5>
+            <strong>{{ choices.adresses.firstname }} - {{ choices.adresses.lastname }}</strong> </br>
+            <strong>{{ choices.adresses.adress }} - {{ choices.adresses.postal }}</strong></br>
+            <strong>{{ choices.adresses.city }} - {{ choices.adresses.country }}</strong></br>
+            <strong>{{ choices.adresses.phone }}</strong></br> 
+            <hr>
+        <h5 style="color: #028391">Votre transporteur</h5>
+            <strong>{{ choices.carriers.name }}</strong></br>
+            <strong>{{ choices.carriers.description }}</strong></br>
+            <strong>{{ choices.carriers.price }}</strong>
+
+           {{ dump(choices) }}
+  
+             
+       </div>
+
+       
+       <div class="col-md-4">
+          
+           <div class="bg-light p-3">
+               <div class="d-flex justify-content-between">
+                   <span class="fw-bold" style="color: #028391">Total de vos produits: </span>                   
+               </div>
+           </div>
+
+            <div class="bg-light p-3">
+               <div class="d-flex justify-content-between mt-3">
+                   <span class="fw-bold" style="color: #028391">Prix du Transporteur: </span>                  
+               </div>
+           </div>
+
+            <div class="bg-light p-3">
+               <div class="d-flex justify-content-between mt-3">
+                   <span class="fw-bold" style="color: #028391">Prix total de la commande: </span>                  
+               </div>
+           </div>
+          
+           <a href="{{ path('app_order') }}" class="btn mt-4 w-100" style="background: #A10035; color: #FBA834">Passer la commande</a>
+       </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Form\OrderType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,8 +44,12 @@ class OrderController extends AbstractController
     */
 
     #[Route('/commande/recapitulatif', name: 'app_order_summary')]
-    public function add(Request $request): Response
+    public function add(Request $request, Cart $cart): Response
     {
+
+        if ($request->getMethod() != 'POST') {
+            return $this->redirectToRoute('app_cart');
+        }
 
         $form = $this->createForm(OrderType::class, null, [
             'adresses' => $this->getUser()->getAdresses(),
@@ -59,6 +64,8 @@ class OrderController extends AbstractController
        
         return $this->render('order/summary.html.twig', [
             'choices' => $form->getData(),
+            'cart' => $cart->getCart(),
+            'totalWt' => $cart->getTotalWt(),
         ]);
     }
 }

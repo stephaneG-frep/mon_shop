@@ -2,45 +2,72 @@
 {% block body %}
 
 
-<div class="container my-5"> 
+<div class="container my-5">
+
     <h1 style="color: #028391">Récapitulatif de commande...</h1>
-    <div class="row mt-2">
-       <div class="col-md-8">
-           Contenu de mon panier</br>
+
+    <div class="row my-4">
+
+        <div class="col-md-8">
+
+        <div class="bg-warning p-3 mb-4">
+            <h5 style="color: #028391">Contenu de mon panier</h5>
+ 
+         {% for product in cart %}   
+
+            <div class="row my-4">
+      
+                    <div class="col-md-2">
+                        <img src="/uploads/{{ product.objet.illustration }}" class="img-fluid" alt="{{ product.objet.name }}"  />
+                    </div>
+                    <div class="col-md-6">
+                         <strong style="color: #028391">{{ product.objet.name }}</strong>
+                         <span style="background: #F99417" class="d-block mt-3 text-center small" >Ce produit est au prix de: {{ product.objet.pricewt|price }}</span>
+                    </div>
+                    <div class="col-md-2 text-right">
+                         <span class="badge bg-secondary">
+                           <span style="color: #7ABA78; font: small-caps bold 18px/1 sans-serif;"> X {{ product.qty}} </span> 
+                        </span>
+                    </div>
+                    <div class="col-md-2">
+                        <span style="color: #EE4E4E; font: small-caps bold 18px/1 sans-serif;"> {{ (product.qty * product.objet.pricewt)|price }} </span>
+                    </div>
+            </div>
+
+         {% endfor %}
+         
+        </div>
+    <hr>
+    <div class="bg-light p-3">
         <h5 style="color: #028391"> Votre adresse de livraison </h5>
             <strong>{{ choices.adresses.firstname }} - {{ choices.adresses.lastname }}</strong> </br>
             <strong>{{ choices.adresses.adress }} - {{ choices.adresses.postal }}</strong></br>
             <strong>{{ choices.adresses.city }} - {{ choices.adresses.country }}</strong></br>
             <strong>{{ choices.adresses.phone }}</strong></br> 
+    </div>        
             <hr>
+    <div class="bg-light p-3">        
         <h5 style="color: #028391">Votre transporteur</h5>
             <strong>{{ choices.carriers.name }}</strong></br>
             <strong>{{ choices.carriers.description }}</strong></br>
-            <strong>{{ choices.carriers.price }}</strong>
-
-           {{ dump(choices) }}
-  
-             
-       </div>
+            <strong>{{ choices.carriers.price|price }}</strong>
+    </div>     
+    </div>
 
        
        <div class="col-md-4">
           
-           <div class="bg-light p-3">
-               <div class="d-flex justify-content-between">
-                   <span class="fw-bold" style="color: #028391">Total de vos produits: </span>                   
+            <div class="bg-light p-3">
+               <div class="d-flex justify-content-between mt-3">
+                    <span class="fw-bold" style="color: #028391">Prix du Transporteur:</span>
+                    <span class="fw-bold" style="color: #028391">{{ choices.carriers.price|price}}</span>            
                </div>
            </div>
 
             <div class="bg-light p-3">
                <div class="d-flex justify-content-between mt-3">
-                   <span class="fw-bold" style="color: #028391">Prix du Transporteur: </span>                  
-               </div>
-           </div>
-
-            <div class="bg-light p-3">
-               <div class="d-flex justify-content-between mt-3">
-                   <span class="fw-bold" style="color: #028391">Prix total de la commande: </span>                  
+                   <span class="fw-bold" style="color: #028391">Prix total de la commande:</span>
+                   <span class="fw-bold" style="color: #028391">{{ (totalWt + choices.carriers.price)|price }}</span>                 
                </div>
            </div>
           

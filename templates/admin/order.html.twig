@@ -1,0 +1,57 @@
+{% extends '@!EasyAdmin/Layout.html.twig' %}
+{% block main %}
+<h3>Commande n° {{ order.id }}</h3>
+<hr>
+<strong> Passée le: {{ order.createdAt|date('d/m/Y') }}</strong></br></br>
+
+
+<div class="row my-4">
+
+    <div class="col-md-6">
+    {{ include('admin/state.html.twig', { field : { 'value' : order.state } } ) }}</br>
+       <strong>Adresse de livraison: </strong></br>
+       {{ order.delivery|raw }}
+    </div>
+    <div class="col-md-6 mb-5 ">
+        <strong>Transporteur: </strong></br>
+        {{ order.carrierName|raw }}
+    </div>
+
+</div>
+
+<strong>Contenu de la commande: </strong>
+<hr>  
+   
+
+   <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">illustration</th>
+      <th scope="col">Nom du produit</th>
+      <th scope="col">Quantitée</th>
+      <th scope="col">Prix unitaire H.T</th>
+      <th scope="col">T.V.A</th>
+      <th scope="col">Total T.T.C</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for product in order.orderDetails %}
+    <tr> 
+       <td>
+          <img src="/uploads/{{ product.productIllustration }}" width="100px" alt=""/>
+          {{ product.productIllustration }}
+       </td>
+       <td>{{ product.productName }}</td>
+       <td>{{ product.productQuantity }}</td>
+       <td>{{ product.productPrice|price }}</td>
+       <td>{{ product.productTva }}%</td>
+       {% set coeff = 1 + (product.productTva / 100) %}
+       <td>{{ ((product.productPrice * coeff) * product.productQuantity)|price }}</td>
+      
+    </tr>
+  {% endfor %}
+    
+  </tbody>
+</table>
+
+{% endblock %}

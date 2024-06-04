@@ -1,0 +1,9 @@
+
+{%  if field.value == 1 %}
+    <h6 class="text-center" style="background: #408E91">En attente de paiement</h6>
+{% elseif field.value == 2 %}
+    <h6 class="text-center" style="background: #A7D397">Payée</h6>
+{% elseif field.value == 3 %} 
+    <h6 class="text-center" style="background: #AF2655">Expédiée</h6>   
+{% endif %}
+

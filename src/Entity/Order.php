@@ -23,7 +23,7 @@ class Order
     /*
     * 1 : en attente de paiement
     * 2 : Paiement validé
-    µ 3 : Expédié
+    * 3 : Expédié
     */
 
     #[ORM\Column]
@@ -51,6 +51,31 @@ class Order
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
+    }
+
+    public function getTotalWt()
+    {   
+        $totalTtc = 0;
+        $products = $this->getOrderDetails();
+
+        foreach ($products as $product) {
+            $coeff = 1 + ($product->getProductTva() / 100);
+            $totalTtc += ($product->getProductPrice() * $coeff) * $product->getProductQuantity();
+        }
+
+        return $totalTtc + $this->getCarrierPrice();
+    }
+
+    public function getTotalTva()
+    {  
+        $totalTva = 0;
+        $products = $this->getOrderDetails();
+
+        foreach ($products as $product) {
+            $coeff = $product->getProductTva() / 100;
+            $totalTva += $product->getProductPrice() * $coeff;
+        }
+        return $totalTva;
     }
 
     public function getId(): ?int

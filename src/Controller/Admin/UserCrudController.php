@@ -16,6 +16,7 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
+    // configuration en français
     public function configureCrud(Crud $crud): Crud 
     {
         return $crud

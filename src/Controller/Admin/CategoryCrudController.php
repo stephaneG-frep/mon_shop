@@ -17,6 +17,7 @@ class CategoryCrudController extends AbstractCrudController
         return Category::class;
     }
 
+     // configuration en français
     public function configureCrud(Crud $crud): Crud 
     {
         return $crud

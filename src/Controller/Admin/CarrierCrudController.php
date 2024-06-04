@@ -18,6 +18,7 @@ class CarrierCrudController extends AbstractCrudController
         return Carrier::class;
     }
 
+     // configuration en français
     public function configureCrud(Crud $crud): Crud 
     {
         return $crud

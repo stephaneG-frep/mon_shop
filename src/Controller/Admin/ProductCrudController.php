@@ -21,6 +21,7 @@ class ProductCrudController extends AbstractCrudController
         return Product::class;
     }
 
+    // configuration en français
     public function configureCrud(Crud $crud): Crud
     {
         return $crud

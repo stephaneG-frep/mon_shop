@@ -71,7 +71,7 @@
                </div>
            </div>
           
-           <a href="" class="btn mt-4 w-100" style="background: #A10035; color: #FBA834">Payer la commande</a>
+           <a href="{{ path('app_payment', { 'id_order' : order.id } ) }}" class="btn mt-4 w-100" style="background: #A10035; color: #FBA834">Payer la commande</a>
        </div>
 
     </div>

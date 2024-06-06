@@ -4,10 +4,10 @@
 {% block body %}
 
     <div class="container my-5 text-center">
-        <img src="/assets/img/succes.png" alt="check" />
+        <img src="/assets/img/succes.png" alt="check de validation et remerciment" width="180px" height="180px"/>
         <h1 style="color: #028391">Merci pour votre commande</h1>
 
-         <a href="" class="btn mt-4 " 
+         <a href="{{ path('app_account_order', { 'id_order' : order.id } ) }}" class="btn mt-4 " 
          style="background: #A10035; color: #FBA834">Consulter ma commande</a>
 
           

@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="container my-5"> 
+    <h1 style="color: #028391">Espace menbre...</h1>
+    <div class="row"> 
+        <div class="col-md-3">
+            {% include 'account/_menu.html.twig' %}       
+        </div>
+
+        <dic class="col-md-9">
+            <h3 style="color: #028391">Ma commande n° : {{ order.id }}</h3>
+               
+               <hr>
+        <strong> Passée le: {{ order.createdAt|date('d/m/Y') }}</strong></br></br>
+
+ <div class="row my-4">
+
+    <div class="col-md-6">
+    {{ include('admin/state.html.twig', { field : { 'value' : order.state } } ) }}</br>
+       <strong style="color: #028391" >Adresse de livraison: </strong></br>
+       {{ order.delivery|raw }}
+    </div>
+    <div class="col-md-6 mb-5 ">
+        <strong style="color: #028391">Transporteur: </strong></br>
+        {{ order.carrierName|raw }}
+    </div>
+
+</div>
+
+<strong style="color: #028391">Contenu de la commande: </strong>
+<hr>  
+   
+
+   <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">illustration</th>
+      <th scope="col">Nom du produit</th>
+      <th scope="col">Quantitée</th>
+      <th scope="col">Prix unitaire H.T</th>
+      <th scope="col">T.V.A</th>
+      <th scope="col">Total T.T.C</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for product in order.orderDetails %}
+    <tr> 
+       <td>
+          <img src="/uploads/{{ product.productIllustration }}" width="100px" alt=""/>
+          {{ product.productIllustration }}
+       </td>
+       <td>{{ product.productName }}</td>
+       <td>{{ product.productQuantity }}</td>
+       <td>{{ product.productPrice|price }}</td>
+       <td>{{ product.productTva }}%</td>
+       {% set coeff = 1 + (product.productTva / 100) %}
+       <td>{{ ((product.productPrice * coeff) * product.productQuantity)|price }}</td>
+      
+    </tr>
+  {% endfor %}
+
+  <tr>
+     <td><h6 class="text-center" style="background: #ED7D31">Transporteur</h6></td>
+     <td>{{ order.carrierName }}</td>
+     <td>1</td>
+     <td></td>
+     <td></td>
+     <td>{{ order.carrierPrice|price }}</td>
+  </tr>
+    
+  </tbody>
+</table>
+
+<div class="text-right fs-5">
+    <strong>Total H.T: </strong> {{ (order.totalWt - order.totalTva)|price }}</br>
+    <strong>Total T.V.A: </strong> {{ order.totalTva|price }}</br>
+    <strong>Total T.T.C: </strong> {{ order.totalWt|price }}
+</div>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

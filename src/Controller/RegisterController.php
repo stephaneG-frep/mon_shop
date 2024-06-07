@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Mail;
 use App\Entity\User;
 use App\Form\RegisterUserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,6 +32,9 @@ class RegisterController extends AbstractController
                 'Votre compte a bien été crée...'
               );
 
+              // Envoye d'un mail de confirmation (mailjet)
+              $mail = new Mail();
+              $mail->send($user->getEmail(), $user->getFirstname().' '.$user->getLastname(), 'Bienvenu sur Mon_shop', 'welcome.html');
               return $this->redirectToRoute('app_login');
         }
 

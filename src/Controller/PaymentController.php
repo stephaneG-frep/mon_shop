@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Classe\Cart;
+use App\Classe\Mail;
+use App\Entity\User;//
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Checkout\Session;
@@ -82,6 +84,27 @@ class PaymentController extends AbstractController
     #[Route('/commande/merci/{stripe_session_id}', name: 'app_payment_success')]
     public function success($stripe_session_id, OrderRepository $orderRepository, EntityManagerInterface $entityManager, Cart $cart): Response
     {  
+        //$user = new  User();//
+          $user = $this->getUser();
+        // Envoye d'un mail de confirmation (mailjet)
+        $mail = new Mail();
+        $vars = [
+          'firstname' => $user->getFirstname(),
+          'lastname' => $user->getLastname(),
+        ];
+        $mail->send($user->getEmail(), $user->getFirstname().' '.$user->getLastname(), 'Bienvenu sur Mon_shop', 'command_ok.html', $vars);
+        //
+
+        // Envoye d'un mail de nouvelle commande a l'administrateur (mailjet)
+        // $mail = new Mail();
+        // $vars = [
+        //  'firstname' => $user->getFirstname(),
+        //   'lastname' => $user->getLastname(),
+        // ];
+        // $mail->send($user->getEmail(), $user->getFirstname().' '.$user->getLastname(), 'Bienvenu sur Mon_shop', 'newCommand.html', $vars);
+        //
+
+
 
         $order = $orderRepository->findOneBy([
             'stripe_session_id' => $stripe_session_id,

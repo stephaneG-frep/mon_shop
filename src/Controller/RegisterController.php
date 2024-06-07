@@ -22,8 +22,7 @@ class RegisterController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            
+        if ($form->isSubmitted() && $form->isValid()) {            
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -34,7 +33,13 @@ class RegisterController extends AbstractController
 
               // Envoye d'un mail de confirmation (mailjet)
               $mail = new Mail();
-              $mail->send($user->getEmail(), $user->getFirstname().' '.$user->getLastname(), 'Bienvenu sur Mon_shop', 'welcome.html');
+              $vars = [
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+              ];
+              $mail->send($user->getEmail(), $user->getFirstname().' '.$user->getLastname(), 'Bienvenu sur Mon_shop', 'welcome.html', $vars);
+              //
+
               return $this->redirectToRoute('app_login');
         }
 

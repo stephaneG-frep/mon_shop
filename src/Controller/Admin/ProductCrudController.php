@@ -42,7 +42,7 @@ class ProductCrudController extends AbstractCrudController
         }
         return [
             TextField::new('name')->setLabel("Nom")->setHelp("Nom du produit"),
-            BooleanField::new('Homepage')->setLabel('Produits à la une'),
+            BooleanField::new('Homepage')->setLabel('Produits à la une')->setHelp('pour afficher des produits sur la homepage'),
             SlugField::new("slug")->setLabel("URL")->setTargetFieldName("name")
             ->setHelp("URL de votre produit générée automatiquement"),
             TextEditorField::new('description')->setLabel("Déscription")->setHelp("Déscription du produit"),

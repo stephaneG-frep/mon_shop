@@ -6,6 +6,7 @@ use App\Entity\Product;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -41,6 +42,7 @@ class ProductCrudController extends AbstractCrudController
         }
         return [
             TextField::new('name')->setLabel("Nom")->setHelp("Nom du produit"),
+            BooleanField::new('Homepage')->setLabel('Produits à la une'),
             SlugField::new("slug")->setLabel("URL")->setTargetFieldName("name")
             ->setHelp("URL de votre produit générée automatiquement"),
             TextEditorField::new('description')->setLabel("Déscription")->setHelp("Déscription du produit"),

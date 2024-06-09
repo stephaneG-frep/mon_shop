@@ -9,6 +9,8 @@
         </div>
 
         <dic class="col-md-9">
+        <small><a href="{{ path('app_account') }}" class="btn btn-light btn_sm">Retour</a></small>
+        <small><a target="_blank" href="{{ path('app_invoice_customer', { id_order : order.id}) }}" class="btn btn-light btn_sm">Facture</a></small>
             <h3 style="color: #028391">Ma commande n° : {{ order.id }}</h3>
                
                <hr>

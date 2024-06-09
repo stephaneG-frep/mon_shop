@@ -10,13 +10,93 @@
         .text-center {
             text-align: center;
         }
-    </style>
-    <title>Hello, world!</title>
-  </head>
+        .text-right {
+          text-align: right;
+        }
+        .text-left {
+          text-align: left;
+        }
+        table {
+          border-collapse: collapse;
+        }
+        table td {
+          padding: 0.6rem;
+          border: 1px solid lightgrey;
+        }
+        table th {
+          background: #EAECCC ;
+        }
+    </style> 
+    </head>
   <body>
-  <div class="text-center">
-    <h1>Hello, world!</h1>
-  </div>
+    <div class="text-center">
+    
+       <h3 style="color: #028391">Facture commande n° : {{ order.id }}</h3>
+       <table style="width: 100%">
+          <tr>
+             <td style="width: 49%">
+                <strong>mon_shop</strong></br>
+                131 avenue des champs elysées, </br>
+                75008, Paris,</br>
+                FRANCE</br>
+                mon_shop@gmail.com</br>
+                080055654
+             </td>
+             <td class="text-right">
+                {{ order.delivery|raw }}
+             </td>
+          </tr>
+       </table>
+       <hr>
+    </div>
+    <h5>Commande</h5>
+
+        <strong style="color: #028391">Contenu de la commande: </strong>
+<hr>  
+   
+
+   <table style="width: 100%;">
+  <thead>
+    <tr>
+      <th scope="col" class="text-left">Nom du produit</th>
+      <th scope="col" class="text-left">Quantitée</th>
+      <th scope="col" class="text-left">Prix unitaire H.T</th>
+      <th scope="col" class="text-left">T.V.A</th>
+      <th scope="col" class="text-right">Total T.T.C</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for product in order.orderDetails %}
+    <tr> 
+      
+       <td>{{ product.productName }}</td>
+       <td>{{ product.productQuantity }}</td>
+       <td>{{ product.productPrice|price }}</td>
+       <td>{{ product.productTva }}%</td>
+       {% set coeff = 1 + (product.productTva / 100) %}
+       <td class="text-right">{{ ((product.productPrice * coeff) * product.productQuantity)|price }}</td>
+      
+    </tr>
+  {% endfor %}
+
+  <tr>
+     <td><h6 class="text-center" style="background: #ED7D31">Transporteur</h6></td>
+     <td>{{ order.carrierName }}</td>
+     <td>1</td>
+     <td></td>
+     <td></td>
+     <td class="text-right">{{ order.carrierPrice|price }}</td>
+  </tr>
+    
+  </tbody>
+</table>
+
+<div class="text-right fs-5" style="margin-top: 22px">
+    <strong>Total H.T: </strong> {{ (order.totalWt - order.totalTva)|price }}</br>
+    <strong>Total T.V.A: </strong> {{ order.totalTva|price }}</br>
+    <strong>Total T.T.C: </strong> {{ order.totalWt|price }}
+</div>
+
   </body>
 </html>
 

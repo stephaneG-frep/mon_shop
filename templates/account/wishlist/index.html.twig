@@ -10,7 +10,28 @@
     <div class="row">
         <div class="col-md-4">{% include 'account/_menu.html.twig' %}</div>
         <div class="col-md-8">
-           <h3 style="color: #028391"> Liste d'envie... </h3> 
+           <h3 style="color: #028391"> Liste d'envie... ({{ app.user.wishlists|length }})</h3> 
+
+           {% if app.user.wishlists|length > 0 %}
+
+           <div class="row">
+              {% for product in app.user.wishlists %}
+                <div class="col-md-3 text-center">
+                   <a href="{{ path('app_product', { slug : product.slug } ) }}" class="text-decoration-none">
+                       <h4 style="color: #627254">{{ product.name }}</h4>
+                       <img src="/uploads/{{ product.illustration }}" class="img-fluid">
+                   </a>
+                <span style="background: #F99417" class="d-block mt-3" >Ce produit est au prix de: {{ product.pricewt|price }}</span>
+                <a href="{{ path('app_account_wishlist_remove', { id : product.id } ) }}" class="small text-secondary">Supprimer</a>                
+                </div>                 
+              {% endfor %}
+            </div>
+
+           {% else %}
+              Aucun produit dans votre liste d'envie.
+           {% endif %}
+
+
         </div>
     </div>
         

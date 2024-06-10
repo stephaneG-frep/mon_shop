@@ -1,5 +1,19 @@
 {% extends '@!EasyAdmin/Layout.html.twig' %}
 {% block main %}
+
+ <h2>Agir sur la commande</h2>
+   {% if order.state != 1 %}
+      <a href="{{current_url}}&state=3">En préparation</a>
+      <a href="{{current_url}}&state=4">Expédiée</a>
+      <a href="{{current_url}}&state=5">Annulée</a>
+   {% else %}
+      <p>Vous ne pouvez pas agir sur une commande non payée</p>
+   {% endif %}
+ <hr>
+
+
+
+
 <small><a target="_blank" href="{{ path('app_invoice_admin', { id_order : order.id}) }}" class="btn btn-light btn_sm">Voir/Imprimer la facture</a></small>
 <h3>Commande n° {{ order.id }}</h3>
 <hr>
@@ -54,7 +68,7 @@
   {% endfor %}
 
   <tr>
-     <td><h6 class="text-center" style="background: #ED7D31">Transporteur</h6></td>
+     <td><h6 class="text-center" style="background: #ED7D31; color: #2B3499">Transporteur</h6></td>
      <td>{{ order.carrierName }}</td>
      <td>1</td>
      <td></td>

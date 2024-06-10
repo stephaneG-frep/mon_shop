@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
+
+   
+
 {% block body %}
+<style>
+    .wishlist-icon{background-color: #97BE5A; color: #891652; Padding: 9px; border-radius: 50%;}
+    .wishlist-icon-active {background-color: #7743DB; color: #61A3BA}
+</style>
 
 <div class="container my-5"> 
 
@@ -19,8 +26,12 @@
             <div class="d-flex align-items-center mr-2 mt-4">               
                 <a href="{{ path('app_cart_add', { id: product.id } ) }}" class="btn w-100" style="background: #A10035; color: #FBA834">Ajouter au panier</a>
                 {% if app.user %}
-                    <a class="" href="{{ path('app_account_wishlist_add', { id : product.id } ) }}" style="margin-left: 10px"><i data-feather="heart"></i></a>
+                    {% if product in app.user.wishlists %}
+                       <a class="wishlist-icon wishlist-icon-active" href="{{ path('app_account_wishlist_remove', { id : product.id } ) }}" style="margin-left: 10px"><i data-feather="heart"></i></a>
+                    {% else %}
+                       <a class="wishlist-icon" href="{{ path('app_account_wishlist_add', { id : product.id } ) }}" style="margin-left: 10px"><i data-feather="heart"></i></a>
 
+                    {% endif %}
                 {% else %}
                     <a data-bs-target="#collapseWidthExample" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseWidthExample" style="margin-left: 10px"><i data-feather="heart"></i></a>
 

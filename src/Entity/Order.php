@@ -23,7 +23,10 @@ class Order
     /*
     * 1 : en attente de paiement
     * 2 : Paiement validé
-    * 3 : Expédié
+    * 3 : en court de preparation
+    * 4 : Expédié
+    * 5 : Annulé
+    * (Templates/admin/state.html.twig)
     */
 
     #[ORM\Column]

@@ -1,9 +1,18 @@
 
 {%  if field.value == 1 %}
     <h6 class="text-center" style="background: #408E91">En attente de paiement</h6>
+
 {% elseif field.value == 2 %}
     <h6 class="text-center" style="background: #A7D397; color: #795458">Payée</h6>
+
 {% elseif field.value == 3 %} 
-    <h6 class="text-center" style="background: #AF2655">Expédiée</h6>   
+    <h6 class="text-center" style="background: #AF2655">En préparation</h6> 
+
+{% elseif field.value == 4 %} 
+    <h6 class="text-center" style="background: #CD5C08">Expédiée</h6> 
+
+{% elseif field.value == 5 %} 
+    <h6 class="text-center" style="background: #FE0000; color: #331D2C">Annulée</h6>
+
 {% endif %}
 

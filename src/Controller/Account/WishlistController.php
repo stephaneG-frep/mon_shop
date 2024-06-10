@@ -39,7 +39,7 @@ class WishlistController extends AbstractController
     }
 
     #[Route('/compte/liste-de-souhait/remove/{id}', name: 'app_account_wishlist_remove')]
-    public function remove(ProductRepository $productRepository, EntityManagerInterface $entityManager, $id): Response
+    public function remove(ProductRepository $productRepository, EntityManagerInterface $entityManager, Request $request, $id): Response
     {
         // 1. Récupérer le produit a supprimer
         $product = $productRepository->findOneById($id);
@@ -53,7 +53,6 @@ class WishlistController extends AbstractController
             $this->addFlash('danger', "le produit est introuvable!!");
         }
         
-        return $this->redirectToRoute('app_account_wishlist');
-
+        return $this->redirect($request->headers->get('referer'));
     }
 }

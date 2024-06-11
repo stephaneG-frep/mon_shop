@@ -21,11 +21,12 @@
                
                <input type="hidden" name="_target_path" value="{{ path('app_account') }}"> 
 
-                <button type="submit" class="btn btn-success mt-3">Connexion</button>
+                <button type="submit" class="btn mt-3" style="background: #A10035; color: #FBA834">Connexion</button>
            </form>
            </br>
 
-           <h3 style="color: #028391" >Pas encore de compte...</h3><a href="{{ path('app_register') }}" style="color: #028391">M'inscrire..</a>
+           <h4 style="color: #028391" >Pas encore de compte...</h4><a href="{{ path('app_register') }}" style="color: #028391">M'inscrire..</a></br></br>
+           <h4 style="color: #028391" >Mot de passe oublié...</h4><a href="{{ path('app_password') }}" style="color: #028391">Mot de passe oublié</a>
     </div>
 
 {% endblock %}

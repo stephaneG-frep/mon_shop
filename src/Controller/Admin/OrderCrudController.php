@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Classe\Mail;
+use App\Classe\State;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -68,14 +69,14 @@ class OrderCrudController extends AbstractCrudController
         $this->addFlash('success', 'Statut de la commande mis a jour');
 
         // 3 Imformer le client du statut de commande par mail
-         // Envoye d'un mail de confirmation (mailjet)
+         // Envoye d'un mail de confirmation (mailjet)(appel des classes Mail et State)
          $mail = new Mail();
          $vars = [
            'firstname' => $order->getUser()->getFirstname(),
            'lastname' => $order->getUser()->getLastname(),
            'id_order' => $order->getId(),
          ];
-         $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname().' '.$order->getUser()->getLastname(), 'Modification du statut de votre commande', "order_state_".$state.".html", $vars);
+         $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname().' '.$order->getUser()->getLastname(), State::STATE[$state]['email_subject'],  State::STATE[$state]['email_template'], $vars);
          //
     }
 

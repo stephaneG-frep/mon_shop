@@ -6,6 +6,7 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -33,6 +34,7 @@ class UserCrudController extends AbstractCrudController
         return [
             TextField::new('firstname')->setLabel('Prénom'),
             TextField::new('lastname')->setLabel('Nom de famille'),
+            DateField::new('LastLoginAt')->setLabel('Derniere connexion')->onlyOnIndex(),
             ChoiceField::new('roles')->setLabel('Permission')->setHelp("Choissir le role de l'utulisateur")
                 ->setChoices([
                 'ROLE_USER' => 'ROLE_USER',

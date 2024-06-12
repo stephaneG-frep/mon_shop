@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ForgotPasswordController extends AbstractController
 {
@@ -49,11 +50,12 @@ class ForgotPasswordController extends AbstractController
             $date->modify('+10 minutes');
             $user->setTokenExpireAt($date);            
             $this->em->flush();
-dd($user);
+
+
             // Envoye d'un mail de réinitialisation(mailjet)
             $mail = new Mail();
             $vars = [
-                 'link' => 'link',
+                 'link' => $this->generateUrl('app_password_update', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL),
               ];
             $mail->send($user->getEmail(), $user->getFirstname().' '.$user->getLastname(), "Réinitialisation de votre mot de passe", "forgotpassword.html", $vars);
               //
@@ -69,15 +71,35 @@ dd($user);
         ]);
     }
 
+
     #[Route('/mot-de-passe/reset/{token}', name: 'app_password_update')]
-    public function update(Request $request): Response
+    public function update(Request $request, UserRepository $userRepository, $token): Response
     {
-        $form = $this->createForm(ResetPasswordFormType::class);
+        if (!$token) {
+           return $this->redirectToRoute('app_password');
+        } 
+
+        $user = $userRepository->findOneByToken($token);
+
+        $now = new DateTime();
+        if (!$user || $now > $user->getTokenExpireAt()) {
+            return $this->redirectToRoute('app_password');
+        }
+
+        $form = $this->createForm(ResetPasswordFormType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Traitement a éffectuer
+            $user->setToken(null);
+            $user->setTokenExpireAt(null);
+            $this->em->flush();
+            $this->addFlash(
+              'success',
+              'Votre mot de passe a bien été enregistré...'
+            );
+            return $this->redirectToRoute('app_login');
         }
          
         return $this->render('password/reset.html.twig', [

@@ -16,14 +16,6 @@ class ResetPasswordFormType extends AbstractType
     {
             
         $builder
-        ->add('actualPassword', PasswordType::class, [
-            'label' => "Votre mot de passe actuel",
-            'attr' => [
-                'style' => "background: #E1F7F5; color: #AFD198 ",
-                'placeholder' => "Entrez votre mot de passe"
-            ],
-            'mapped' => false
-        ])
         ->add('PlainPassword', RepeatedType::class, [
             'type' => PasswordType::class,
             'constraints' => [

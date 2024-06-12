@@ -6,6 +6,8 @@ use App\Classe\Mail;
 use App\Form\ForgotPasswordFormType;
 use App\Form\ResetPasswordFormType;
 use App\Repository\UserRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +15,13 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ForgotPasswordController extends AbstractController
 {
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     #[Route('/mot-de-passe-oublié', name: 'app_password')]
     public function index(Request $request, UserRepository $userRepository): Response
     {
@@ -31,14 +40,22 @@ class ForgotPasswordController extends AbstractController
             // notification envoyée a l'utilisateur
             $this->addFlash('success', 'si votre adresse existe un mail de réinitialisation vous sera envoyé');
 
-             // 4: si mail ok reset du password et envoie du nouveau par mail
-            if ($user) {
-                 // Envoye d'un mail de réinitialisation(mailjet)
-              $mail = new Mail();
-              $vars = [
+            // 4: si mail ok reset du password et envoie du nouveau par mail
+        if ($user) {
+            // 4.a Créer un token et le stocker en BDD               
+            $token = bin2hex(random_bytes(15));
+            $user->setToken($token);
+            $date= new DateTime();
+            $date->modify('+10 minutes');
+            $user->setTokenExpireAt($date);            
+            $this->em->flush();
+dd($user);
+            // Envoye d'un mail de réinitialisation(mailjet)
+            $mail = new Mail();
+            $vars = [
                  'link' => 'link',
               ];
-              $mail->send($user->getEmail(), $user->getFirstname().' '.$user->getLastname(), "Réinitialisation de votre mot de passe", "forgotpassword.html", $vars);
+            $mail->send($user->getEmail(), $user->getFirstname().' '.$user->getLastname(), "Réinitialisation de votre mot de passe", "forgotpassword.html", $vars);
               //
             }
            
@@ -55,7 +72,7 @@ class ForgotPasswordController extends AbstractController
     #[Route('/mot-de-passe/reset/{token}', name: 'app_password_update')]
     public function update(Request $request): Response
     {
-        $form = $this->createForm( ResetPasswordFormType::class);
+        $form = $this->createForm(ResetPasswordFormType::class);
 
         $form->handleRequest($request);
 
@@ -64,7 +81,7 @@ class ForgotPasswordController extends AbstractController
         }
          
         return $this->render('password/reset.html.twig', [
-            'form' => $form->createView(),
+            'formResetPassword' => $form->createView(),
         ]);
     }
 }
